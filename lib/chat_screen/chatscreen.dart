@@ -22,25 +22,31 @@ class _ChatScreenState extends State<ChatScreen> {
             //     return;
             //   },
             // ),
-            Row(
-              children: [
-                TextField(
-                  controller: msg,
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    await FirebaseFirestore.instance
-                        // .collection('users')
-                        // .doc(_authProvider.theUser!.uid)
-                        // .set(_generalUser.toMap(), SetOptions(merge: true));
-                        .collection('chat')
-                        .add({
-                      'msg': msg.value,
-                    }).catchError((e) => debugPrint(e.toString()));
-                  },
-                  child: Text("send"),
-                ),
-              ],
+            Expanded(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: msg,
+                    ),
+                  ),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        await FirebaseFirestore.instance
+                            // .collection('users')
+                            // .doc(_authProvider.theUser!.uid)
+                            // .set(_generalUser.toMap(), SetOptions(merge: true));
+                            .collection('chat')
+                            .add({
+                          'msg': msg.value.text,
+                        }).catchError((e) => debugPrint(e.toString()));
+                      },
+                      child: Text("send"),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
