@@ -23,6 +23,35 @@ class _ChatScreenState extends State<ChatScreen> {
             //   },
             // ),
             Expanded(
+              child: Container(
+                height: 150,
+                color: Colors.grey,
+                child: StreamBuilder<QuerySnapshot>(
+                  stream:
+                      FirebaseFirestore.instance.collection('chat').snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Text('error');
+                    } else if (!snapshot.hasData || snapshot.data == null) {
+                      return Text('empty');
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.active) {
+                      List<DocumentSnapshot> _docs = snapshot.data!.docs;
+
+                      List _users = _docs.map((e) => e["msg"]).toList();
+                      //(e.data() as Map<String, dynamic>)
+                      return ListView.builder(
+                          itemCount: _users.length,
+                          itemBuilder: (context, index) {
+                            return Text(_users[index] ?? 'no name');
+                          });
+                    }
+                    return LinearProgressIndicator();
+                  },
+                ),
+              ),
+            ),
+            Expanded(
               child: Row(
                 children: [
                   Expanded(
