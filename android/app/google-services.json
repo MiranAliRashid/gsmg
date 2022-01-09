@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "786326787465",
+    "project_id": "gmsg-de9a0",
+    "storage_bucket": "gmsg-de9a0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:786326787465:android:d91e994b7e639780997d58",
+        "android_client_info": {
+          "package_name": "com.example.gsmg"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "786326787465-3kl2n3ltk8sclirhoog4b2ilc6cq1m17.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDa-RaZUtY2_YLHsBTx5FYgpt4I-CGwp6c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "786326787465-3kl2n3ltk8sclirhoog4b2ilc6cq1m17.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
