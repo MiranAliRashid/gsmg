@@ -45,7 +45,15 @@ class _ChatScreenState extends State<ChatScreen> {
                         ConnectionState.active) {
                       List<DocumentSnapshot> _docs = snapshot.data!.docs;
 
-                      List _users = _docs.map((e) => e["msg"]).toList();
+                      List<ChatModel> _users = _docs
+                          .map((e) => ChatModel.fromMap(
+                              e.data() as Map<String, dynamic>))
+                          .toList();
+                      // _users = _users.sort((a, b) {
+                      //   //sorting in ascending order
+                      //   return DateTime.parse(a.date.toString())
+                      //       .compareTo(DateTime.parse(b.date.toString()));
+                      // });
                       // List<ChatModel> _users = _docs.map((e) {e["msg"]).toList();
                       //(e.data() as Map<String, dynamic>)
                       return ListView.builder(
@@ -56,7 +64,13 @@ class _ChatScreenState extends State<ChatScreen> {
                               color: Colors.cyan[50],
                               margin: EdgeInsets.all(8),
                               padding: EdgeInsets.all(8),
-                              child: Text(_users[index] ?? 'no name'),
+                              child: Column(
+                                children: [
+                                  Text(_users[index].msg),
+                                  Divider(),
+                                  Text(_users[index].date.toDate().toString()),
+                                ],
+                              ),
                             );
                           });
                     }
