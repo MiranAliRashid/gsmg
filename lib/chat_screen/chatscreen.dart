@@ -1,5 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gsmg/models/chatmodel.dart';
+import 'package:gsmg/widgets/personal_chat_app_bar.dart';
+import 'package:gsmg/widgets/personal_chat_text_field.dart';
+import 'package:intl/intl.dart';
 
 class ChatScreen extends StatefulWidget {
   ChatScreen({Key? key}) : super(key: key);
@@ -13,7 +17,9 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
+        appBar: PersonalChatAppBar(),
         body: Column(
           children: [
             // ListView.builder(
@@ -24,11 +30,12 @@ class _ChatScreenState extends State<ChatScreen> {
             // ),
             Expanded(
               child: Container(
-                height: 150,
-                color: Colors.grey,
+                //height: 150,
+                color: Colors.white,
                 child: StreamBuilder<QuerySnapshot>(
-                  stream:
-                      FirebaseFirestore.instance.collection('chat').snapshots(),
+                  stream: FirebaseFirestore.instance
+                      .collection('chatv2')
+                      .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
                       return Text('error');
@@ -39,11 +46,18 @@ class _ChatScreenState extends State<ChatScreen> {
                       List<DocumentSnapshot> _docs = snapshot.data!.docs;
 
                       List _users = _docs.map((e) => e["msg"]).toList();
+                      // List<ChatModel> _users = _docs.map((e) {e["msg"]).toList();
                       //(e.data() as Map<String, dynamic>)
                       return ListView.builder(
                           itemCount: _users.length,
                           itemBuilder: (context, index) {
-                            return Text(_users[index] ?? 'no name');
+                            //return Text(_users[index] ?? 'no name');
+                            return Container(
+                              color: Colors.cyan[50],
+                              margin: EdgeInsets.all(8),
+                              padding: EdgeInsets.all(8),
+                              child: Text(_users[index] ?? 'no name'),
+                            );
                           });
                     }
                     return LinearProgressIndicator();
@@ -51,32 +65,33 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
               ),
             ),
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: msg,
-                    ),
-                  ),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        await FirebaseFirestore.instance
-                            // .collection('users')
-                            // .doc(_authProvider.theUser!.uid)
-                            // .set(_generalUser.toMap(), SetOptions(merge: true));
-                            .collection('chat')
-                            .add({
-                          'msg': msg.value.text,
-                        }).catchError((e) => debugPrint(e.toString()));
-                      },
-                      child: Text("send"),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            PersonalChatTextField()
+            // Expanded(
+            //   child: Row(
+            //     children: [
+            //       Expanded(
+            //         child: TextField(
+            //           controller: msg,
+            //         ),
+            //       ),
+            //       Expanded(
+            //         child: ElevatedButton(
+            //           onPressed: () async {
+            //             await FirebaseFirestore.instance
+            //                 // .collection('users')
+            //                 // .doc(_authProvider.theUser!.uid)
+            //                 // .set(_generalUser.toMap(), SetOptions(merge: true));
+            //                 .collection('chat')
+            //                 .add({
+            //               'msg': msg.value.text,
+            //             }).catchError((e) => debugPrint(e.toString()));
+            //           },
+            //           child: Text("send"),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),
