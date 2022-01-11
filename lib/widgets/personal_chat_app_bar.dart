@@ -15,12 +15,15 @@ class PersonalChatAppBar extends StatelessWidget
         onPressed: () {},
         icon: const Icon(Icons.keyboard_arrow_left, color: Colors.black),
       ),
-      title: Column(
+      title: Row(
         children: [
           Image.asset(
-            "chat.png",
+            "assets/images/chat.png",
             width: 20,
             height: 20,
+          ),
+          SizedBox(
+            width: 15,
           ),
           const Text(
             "Chat screen ",
