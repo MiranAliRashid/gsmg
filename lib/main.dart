@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:gsmg/providers/name.dart';
 import 'package:gsmg/routes.dart';
 import 'package:gsmg/services/authService.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +16,7 @@ Future<void> main() async {
       child: const Routes(),
       providers: [
         ChangeNotifierProvider(create: (context) => AuthService()),
+        ChangeNotifierProvider(create: (context) => NameProvider()),
       ],
     ),
   );

@@ -13,6 +13,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  ScrollController scrolcontrol = new ScrollController();
   TextEditingController msg = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -35,6 +36,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 child: StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
                       .collection('chatv2')
+                      .orderBy('date', descending: false)
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
@@ -49,14 +51,11 @@ class _ChatScreenState extends State<ChatScreen> {
                           .map((e) => ChatModel.fromMap(
                               e.data() as Map<String, dynamic>))
                           .toList();
-                      // _users = _users.sort((a, b) {
-                      //   //sorting in ascending order
-                      //   return DateTime.parse(a.date.toString())
-                      //       .compareTo(DateTime.parse(b.date.toString()));
-                      // });
+
                       // List<ChatModel> _users = _docs.map((e) {e["msg"]).toList();
                       //(e.data() as Map<String, dynamic>)
                       return ListView.builder(
+                          controller: scrolcontrol,
                           itemCount: _users.length,
                           itemBuilder: (context, index) {
                             //return Text(_users[index] ?? 'no name');
@@ -66,20 +65,65 @@ class _ChatScreenState extends State<ChatScreen> {
                               padding: EdgeInsets.all(8),
                               child: Column(
                                 children: [
-                                  Text(_users[index].msg),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(_users[index].msg),
+                                      Container(
+                                        alignment: Alignment.center,
+                                        child: ElevatedButton(
+                                          onPressed: () async {
+                                            var collection = FirebaseFirestore
+                                                .instance
+                                                .collection('chatv2');
+                                            var snapshot = await collection
+                                                .where('msg',
+                                                    isEqualTo:
+                                                        _users[index].msg)
+                                                .where('date',
+                                                    isEqualTo:
+                                                        _users[index].date)
+                                                .get();
+                                            for (var doc in snapshot.docs) {
+                                              await doc.reference.delete();
+                                            }
+                                          },
+                                          child: const Icon(
+                                            Icons.delete,
+                                            size: 20,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                   Divider(),
-                                  Text(_users[index].date.toDate().toString()),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "send by " + _users[index].name,
+                                        style: TextStyle(color: Colors.black26),
+                                      ),
+                                      Text(_users[index]
+                                          .date
+                                          .toDate()
+                                          .toString()),
+                                    ],
+                                  ),
                                 ],
                               ),
                             );
                           });
                     }
+
                     return LinearProgressIndicator();
                   },
                 ),
               ),
             ),
-            PersonalChatTextField()
+            PersonalChatTextField(sc: scrolcontrol)
             // Expanded(
             //   child: Row(
             //     children: [

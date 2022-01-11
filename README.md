@@ -1,16 +1,30 @@
 # gsmg
 
-A new Flutter project.
+# Yassin leader
+#### creating the report and reviewing
 
-## Getting Started
+# Ahamd
+#### sort messages by date and time
 
-This project is a starting point for a Flutter application.
+# miran
+#### add another text box which is required and user can add their name
+the name of user has to be shown in the app bar and in the chat bubble
 
-A few resources to get you started if this is your first Flutter project:
+# Ali 
+####  add a delete button to delete that specific message
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+# rafaat
+#### design a card for text messages like whatsapp
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Huda
+#### work on UI 
+
+# omar
+#### add the date and time of message ,
+
+# milad
+#### add an appbar without a background with a title which loads a logo from assets folder
+
+# Mhamad
+####  work on UI
+

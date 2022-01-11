@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gsmg/providers/name.dart';
+import 'package:provider/provider.dart';
 // import 'package:game_messenger_app/constants.dart';
 
 class PersonalChatAppBar extends StatelessWidget
@@ -25,8 +27,8 @@ class PersonalChatAppBar extends StatelessWidget
           SizedBox(
             width: 15,
           ),
-          const Text(
-            "Chat screen ",
+          Text(
+            Provider.of<NameProvider>(context).name,
             style: TextStyle(color: Colors.black),
           ),
         ],
